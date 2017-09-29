@@ -3,6 +3,7 @@
 DEV=offline
 EXIT=0
 try=0
+adb_port=5555
 #ip address ip1.ip2.ip3.ip4
 ip1=172
 ip2=16
@@ -38,7 +39,7 @@ do
     adb disconnect $ip1.$ip2.$ip3.$ip4 > /dev/null 2>&1
     adb connect $ip1.$ip2.$ip3.$ip4
     sleep 1
-    DEV=`adb devices | sed -e "/devices/d" | grep -o "device"`
+    DEV=`adb devices | sed -e "/devices/d" | grep "$ip1.$ip2.$ip3.$ip4" | grep -o "device"`
     if [ "$DEV" != "device" ]; then
         DEV=offline
         echo "device is offline, connect again"
@@ -55,7 +56,7 @@ do
     # adb root will restart adbd,
     # so after adb root, needs connect again
     if [ $isroot -eq 0 ]; then
-        rootinfo=`adb root 2>&1`
+        rootinfo=`adb -s $ip1.$ip2.$ip3.$ip4:$adb_port root 2>&1`
 
         if [[ "$rootinfo" =~ [a-z]+as\ root ]]; then
             isroot=1
@@ -63,7 +64,7 @@ do
         fi
     fi
 
-    flag=`adb remount`
+    flag=`adb -s $ip1.$ip2.$ip3.$ip4:$adb_port remount`
     if [ "$flag" != "remount succeeded" ]; then
         flag=""
         echo "adb remount failed, try again"
