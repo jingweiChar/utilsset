@@ -1,0 +1,10 @@
+env/bin/plantuml
+env/tool/jar/plantuml.jar
+env/vim/ftdetect/plantuml.vim
+env/vim/ftplugin/plantuml.vim
+env/vim/indent/plantuml.vim
+env/vim/syntax/plantuml.vim
+env/vim/plugged
+env/tool/pyenv/
+env/config/pyenv.conf
+env/vim/autoload/plug.vim
