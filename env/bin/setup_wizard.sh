@@ -85,6 +85,7 @@ func_vim_env() {
   pushd $ENV_PATH
   git clone https://github.com/aklt/plantuml-syntax.git plantuml-syntax
   git clone https://github.com/majutsushi/tagbar.git
+  git clone https://github.com/xavierd/clang_complete.git
   popd
 
   # plantuml vim plugin
@@ -97,9 +98,20 @@ func_vim_env() {
 
   ### tagbar
   rm -rf $ENV_PATH/tagbar/.git*
+  rm -rf $ENV_PATH/tagbar/LICENSE
+  rm -rf $ENV_PATH/tagbar/README.md
   cp -r $ENV_PATH/tagbar/* $VIM_PATH
   rm -rf $ENV_PATH/tagbar
   ### tagbar end
+
+  ### clang_complete
+  pushd $ENV_PATH/clang_complete
+  make
+  vim -c "set runtimepath^=$ENV_PATH/vim" clang_complete.vmb -c 'so %' -c 'q'
+  popd
+
+  rm -rf $ENV_PATH/clang_complete
+  ### clang_complete end
 
   # install plug to manager plug-ins and this must be the last step in func_vimenv_setup
   curl -fLo $VIM_PATH/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

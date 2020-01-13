@@ -96,7 +96,8 @@ autocmd BufNewFile,BufRead *.sh set expandtab tabstop=4 softtabstop=2 shiftwidth
 autocmd BufNewFile,BufRead *.py let g:indentLine_enabled=1 " for indentLine
 
 " filetype plugin on, then turns on omni completion
-set omnifunc=syntaxcomplete#Complete
+set omnifunc=ClangComplete
+set completefunc=ClangComplete
 
 function! WindowNumber()
     let num=tabpagewinnr(tabpagenr())
@@ -140,6 +141,9 @@ endif
 
 let Tlist_Exit_OnlyWindow=1       " exit taglist when only left taglist window
 let Tlist_Show_One_File=1         " only display tags for current active buffer
+
+" llvm lib config example: path to directory where library can be found
+"let g:clang_library_path='/usr/lib/llvm-7/lib'
 
 " plugins installed by vim-plug
 call plug#begin()
