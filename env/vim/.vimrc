@@ -131,7 +131,14 @@ if has("cscope")
     endif
 endif
 
-set tags=./.tags;
+if filereadable("tags") "add any database in current dir
+    set tags=tags
+else "else search tags elsewhere
+    let tags_file=findfile("tags", ".;")
+    if !empty(tags_file) && filereadable(tags_file)
+        exe "set tags=" . tags_file
+    endif
+endif
 
 " 设置字体 以及中文支持
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
@@ -143,7 +150,10 @@ let Tlist_Exit_OnlyWindow=1       " exit taglist when only left taglist window
 let Tlist_Show_One_File=1         " only display tags for current active buffer
 
 " llvm lib config example: path to directory where library can be found
-"let g:clang_library_path='/usr/lib/llvm-7/lib'
+"let g:clang_library_path='/usr/lib/llvm-7/lib/libclang.so.1'
+let g:clang_jumpto_declaration_key='<C-B>'
+let g:clang_jumpto_declaration_in_preview_key='<C-M>'
+let g:clang_jumpto_back_key='<C-N>'
 
 " plugins installed by vim-plug
 call plug#begin()
