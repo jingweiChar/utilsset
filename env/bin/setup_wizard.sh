@@ -55,7 +55,7 @@ func_install_package()
 
   # necessary package
   # fonts-arphic-gkai00mp:文鼎PL简中楷（GB 码）
-  $SUDO apt-get install -y git cscope vim-gnome curl bash-completion \
+  $SUDO apt-get install -y make ctags git cscope vim-gnome curl bash-completion \
       openssh-server cifs-utils tree expect fonts-freefont-ttf pandoc \
       fonts-arphic-gkai00mp dos2unix libcanberra-gtk-module libssl-dev \
       libreadline-dev libsqlite3-dev gdb unzip
