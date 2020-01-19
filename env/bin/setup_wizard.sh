@@ -68,7 +68,7 @@ func_install_package()
   $SUDO apt-get -y install bison
 
   # for universal-ctags compiling
-  $SUDO apt-get install -y libyaml-dev libxml2-dev libseccomp-dev libjansson-dev
+  $SUDO apt-get install -y libyaml-dev libxml2-dev libseccomp-dev libjansson-dev \
       pkg-config autoconf automake python3-docutils
 }
 
