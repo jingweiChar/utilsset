@@ -32,7 +32,7 @@ function generate_index
 
     # generate ctags index
     sed -i -e "s/^\.\{0,1\}\/\{0,1\}/$workdir\//g" ${file_list}
-    ctags -aR -h ".h.H.hh.hpp.hxx.h++.inc.def" --output-format=e-ctags -L ${file_list} -f .tags
+    ctags -aR -h ".h.H.hh.hpp.hxx.h++.inc.def" --output-format=e-ctags -L ${file_list} -f tags
 
     # generate cscope index
     # cscope needs file path starts with double quote(")

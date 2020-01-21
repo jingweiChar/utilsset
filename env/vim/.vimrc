@@ -113,7 +113,10 @@ let g:netrw_dirhistmax = 0
 let g:netrw_dirhist_cnt = 0
 
 let g:tagbar_left = 1
+let g:tagbar_foldlevel = 1
+let g:tagbar_sort = 0
 let g:tagbar_width = 30
+
 if has("cscope")
     set csprg=/usr/bin/cscope
     set csto=1
