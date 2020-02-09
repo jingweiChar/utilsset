@@ -19,10 +19,6 @@ imap <F7> <C-O>:set paste<CR>
 imap <F8> <nop>
 set pastetoggle=<F8>
 
-hi StatusLine    ctermfg=grey
-hi StatusLineNC  ctermfg=blue
-hi ColorColumn   ctermbg=DarkGrey  guibg=DarkGrey " 显示颜色为蓝色
-
 " turn off compatible mode
 " set nocompatible will sets many options, so set it first
 " to avoid it affects other options.
@@ -153,7 +149,7 @@ let Tlist_Exit_OnlyWindow=1       " exit taglist when only left taglist window
 let Tlist_Show_One_File=1         " only display tags for current active buffer
 
 " llvm lib config example: path to directory where library can be found
-"let g:clang_library_path='/usr/lib/llvm-7/lib/libclang.so.1'
+let g:clang_library_path='/usr/lib/llvm-7/lib/libclang.so.1'
 let g:clang_jumpto_declaration_key='<C-B>'
 let g:clang_jumpto_declaration_in_preview_key='<C-M>'
 let g:clang_jumpto_back_key='<C-N>'

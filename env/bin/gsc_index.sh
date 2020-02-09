@@ -7,6 +7,7 @@ workdir=${workdir//\//\\\/}
 search_dir="."
 droid_dir=(art bionic bootable device external frameworks hardware libcore \
            libnativehelper packages system)
+clang_complete='.clang_complete'
 
 function usage()
 {
@@ -14,6 +15,7 @@ cat << EOF
 usage: gsc_index.sh [-a dir] or [-c dir]
   -a dir    generate ctags and cscope index for android specific source code dir
   -c dir    generate ctags and cscope index for current source code dir
+  -r        remove all generated index files
 EOF
 }
 
@@ -41,6 +43,9 @@ function generate_index
 
     # delete file list
     rm ${file_list}
+
+    # generate .clang_complete file
+    echo "-DDEBUG" > ${clang_complete}
 }
 
 OPTIND=1
