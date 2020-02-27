@@ -8,3 +8,4 @@ env/vim/plugged
 env/tool/pyenv/
 env/config/pyenv.conf
 env/vim/autoload/plug.vim
+env/vim/doc/tags
