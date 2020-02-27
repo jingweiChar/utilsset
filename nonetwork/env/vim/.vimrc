@@ -3,7 +3,9 @@
 
 " 键值映射
 nnoremap  <c-]>  g<c-]>      " 键值映射  ctrl+]  映射为  g+ctrl+]
-nnoremap <F2> :Tlist<CR><esc><c-w>=  " Tlist trigger and make all windows equally high and wide
+" should check dependenccy, libjansson-dev and libxml2 for new ctags
+nnoremap <F2> :Tagbar<CR><esc><c-w>=  " Tlist trigger and make all windows equally high and wide
+" nnoremap <F2> :Tlist<CR><esc><c-w>=  " Tlist trigger and make all windows equally high and wide
 nnoremap <F4> :close<CR>     " 多个窗口时，快速关闭当前窗口
 " cnoremap mse :Sexplore<CR>   " 横屏分割，打开netrw Explore
 " cnoremap mve :Vexplore<CR>   " 竖屏分割，打开netrw Explore
@@ -16,10 +18,6 @@ map <F8> :set nopaste<CR>
 imap <F7> <C-O>:set paste<CR>
 imap <F8> <nop>
 set pastetoggle=<F8>
-
-hi StatusLine    ctermfg=grey
-hi StatusLineNC  ctermfg=blue
-hi ColorColumn   ctermbg=DarkGrey  guibg=DarkGrey " 显示颜色为蓝色
 
 " turn off compatible mode
 " set nocompatible will sets many options, so set it first
@@ -94,7 +92,8 @@ autocmd BufNewFile,BufRead *.sh set expandtab tabstop=4 softtabstop=2 shiftwidth
 autocmd BufNewFile,BufRead *.py let g:indentLine_enabled=1 " for indentLine
 
 " filetype plugin on, then turns on omni completion
-set omnifunc=syntaxcomplete#Complete
+set omnifunc=ClangComplete
+set completefunc=ClangComplete
 
 function! WindowNumber()
     let num=tabpagewinnr(tabpagenr())
@@ -110,7 +109,10 @@ let g:netrw_dirhistmax = 0
 let g:netrw_dirhist_cnt = 0
 
 let g:tagbar_left = 1
+let g:tagbar_foldlevel = 1
+let g:tagbar_sort = 0
 let g:tagbar_width = 30
+
 if has("cscope")
     set csprg=/usr/bin/cscope
     set csto=1
@@ -128,7 +130,14 @@ if has("cscope")
     endif
 endif
 
-set tags=./.tags;
+if filereadable("tags") "add any database in current dir
+    set tags=tags
+else "else search tags elsewhere
+    let tags_file=findfile("tags", ".;")
+    if !empty(tags_file) && filereadable(tags_file)
+        exe "set tags=" . tags_file
+    endif
+endif
 
 " 设置字体 以及中文支持
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
@@ -138,6 +147,12 @@ endif
 
 let Tlist_Exit_OnlyWindow=1       " exit taglist when only left taglist window
 let Tlist_Show_One_File=1         " only display tags for current active buffer
+
+" llvm lib config example: path to directory where library can be found
+let g:clang_library_path='/usr/lib/llvm-7/lib/libclang.so.1'
+let g:clang_jumpto_declaration_key='<C-B>'
+let g:clang_jumpto_declaration_in_preview_key='<C-M>'
+let g:clang_jumpto_back_key='<C-N>'
 
 " plugins installed by vim-plug
 call plug#begin()
