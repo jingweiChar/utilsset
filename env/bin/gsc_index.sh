@@ -2,19 +2,17 @@
 # generate source code index
 
 file_list=sc_files.list
-workdir=`pwd`
-workdir=${workdir//\//\\\/}
-search_dir="."
-droid_dir=(art bionic bootable device external frameworks hardware libcore \
-           libnativehelper packages system)
+workdir="$(/bin/pwd)/"
+droid_dir=(bionic device external frameworks hardware libcore system)
 clang_complete='.clang_complete'
 
 function usage()
 {
 cat << EOF
 usage: gsc_index.sh [-a dir] or [-c dir]
-  -a dir    generate ctags and cscope index for android specific source code dir
-  -c dir    generate ctags and cscope index for current source code dir
+  -a        generate source code index for android specific source code dir
+  -c dir    generate source code index for current source code dir
+  -d dir    generate source code index for specify source code dir
   -r        remove all generated index files
 EOF
 }
@@ -25,19 +23,20 @@ function cleanup
     rm cscope.in.out > /dev/null 2>&1
     rm cscope.out > /dev/null 2>&1
     rm cscope.po.out > /dev/null 2>&1
-    rm .tags > /dev/null 2>&1
+    rm tags > /dev/null 2>&1
+    rm ${clang_complete} > /dev/null 2>&1
 }
 
 function generate_index
 {
-    find ${search_dir} -type f -iname "*.[h|c]*" -o -iname "*.java" > ${file_list}
+    echo "generate source code index..."
+    find ${searchdir} -type f -iname "*.[h|c]*" -o -iname "*.java" > ${file_list}
+    find ${searchdir} -type f -iname "*.h*" > ${clang_complete}
 
-    # generate ctags index
-    sed -i -e "s/^\.\{0,1\}\/\{0,1\}/$workdir\//g" ${file_list}
+    sed -i 's/^/-I"/;s/$/"/' ${clang_complete}
+
     ctags -aR -h ".h.H.hh.hpp.hxx.h++.inc.def" --output-format=e-ctags -L ${file_list} -f tags
-
-    # generate cscope index
-    # cscope needs file path starts with double quote(")
+    # file path starts with double quote(")
     sed -i 's/^/"/;s/$/"/' ${file_list}
     cscope -bkqUv -i ${file_list}
 
@@ -45,23 +44,20 @@ function generate_index
     rm ${file_list}
 
     # generate .clang_complete file
-    echo "-DDEBUG" > ${clang_complete}
+    echo "-DDEBUG" >> ${clang_complete}
 }
 
 OPTIND=1
 
-while getopts ":acr" args;
+while getopts ":acd:r" args;
 do
     case $args in
     a)
-        cleanup
-        echo "generate android source code index..."
-        search_dir=${droid_dir[@]}
-        generate_index;;
+        searchdir=(${droid_dir[@]});;
     c)
-        cleanup
-        echo "generate source code index in current directory..."
-        generate_index;;
+        searchdir=('.');;
+    d)
+        searchdir=(${searchdir[@]} $OPTARG);;
     r)
         cleanup
         exit 1;;
@@ -75,3 +71,7 @@ if [ $# -eq 0 -o $OPTIND -eq 1 ]; then
     usage
     exit 1
 fi
+
+searchdir=(${searchdir[@]/#/"$workdir"})
+cleanup
+generate_index
