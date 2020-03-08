@@ -30,8 +30,8 @@ function cleanup
 function generate_index
 {
     echo "generate source code index..."
-    find ${searchdir} -type f -iname "*.[h|c]*" -o -iname "*.java" > ${file_list}
-    find ${searchdir} -type f -iname "*.h*" > ${clang_complete}
+    find ${searchdir[@]} -type f -iname "*.[h|c]*" -o -iname "*.java" > ${file_list}
+    find ${searchdir[@]} -type f -iname "*.h*" > ${clang_complete}
 
     sed -i 's/^/-I"/;s/$/"/' ${clang_complete}
 
