@@ -68,3 +68,9 @@ hi Ignore cterm=bold ctermfg=7 guifg=bg
 hi Error term=reverse cterm=bold ctermfg=7 ctermbg=1 gui=bold guifg=White guibg=Red
 hi Todo term=standout ctermfg=0 ctermbg=3 guifg=Blue guibg=Yellow
 hi ColorColumn ctermfg=1 ctermbg=6 guibg=DarkGrey
+
+" vimdiff
+highlight DiffAdd    cterm=bold ctermfg=7 ctermbg=1 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=1 ctermbg=3 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=0 ctermbg=5 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=7 ctermbg=6 gui=none guifg=bg guibg=Red
