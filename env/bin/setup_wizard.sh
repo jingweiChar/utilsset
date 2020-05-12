@@ -55,7 +55,7 @@ func_install_package()
 
   # necessary package
   # fonts-arphic-gkai00mp:文鼎PL简中楷（GB 码）
-  $SUDO apt-get install -y make ctags git cscope vim-gnome curl bash-completion \
+  $SUDO apt-get install -y make ctags git cscope vim curl bash-completion \
       openssh-server cifs-utils tree expect fonts-freefont-ttf pandoc \
       fonts-arphic-gkai00mp dos2unix libcanberra-gtk-module libssl-dev \
       libreadline-dev libsqlite3-dev gdb unzip
@@ -183,6 +183,7 @@ func_sys_env() {
 func_git_env() {
   git config --local user.name "Xin Xu"
   git config --local user.email "xuxin0509@gmail.com"
+  git config --local core.editor vim
 }
 
 func_android_env() {
