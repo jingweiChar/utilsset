@@ -118,6 +118,10 @@ func_vim_env() {
 
   # each user should use himself vim config
   ln -sf $VIM_PATH/.vimrc $HOME/.vimrc
+
+  # install vim-gui-common, enable python and other feature support
+  # it doesn't mather even if installing is failed
+  $SUDO apt-get -y install vim-gui-common
 }
 
 # setup tool environment
