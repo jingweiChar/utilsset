@@ -58,7 +58,7 @@ func_install_package()
   $SUDO apt-get install -y make ctags git cscope vim curl bash-completion \
       openssh-server cifs-utils tree expect fonts-freefont-ttf pandoc \
       fonts-arphic-gkai00mp dos2unix libcanberra-gtk-module libssl-dev \
-      libreadline-dev libsqlite3-dev gdb unzip
+      libreadline-dev libsqlite3-dev gdb unzip libclang-7-dev
 
   # gdb build error: makeinfo is missing on your system
   $SUDO apt-get -y install texinfo
