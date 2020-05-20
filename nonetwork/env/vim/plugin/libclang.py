@@ -517,7 +517,7 @@ def getCurrentCompletions(base):
   t = CompleteThread(line, column, getCurrentFile(), vim.current.buffer.name,
                      params, timer)
   t.start()
-  while t.isAlive():
+  while t.is_alive():
     t.join(0.01)
     cancel = int(vim.eval('complete_check()'))
     if cancel != 0:
@@ -594,7 +594,6 @@ def gotoDeclaration(preview=True):
     f = File.from_name(tu, vim.current.buffer.name)
     loc = SourceLocation.from_position(tu, f, line, col + 1)
     cursor = Cursor.from_location(tu, loc)
-    print(cursor.referenced)
     defs = [cursor.get_definition(), cursor.referenced]
 
     for d in defs:

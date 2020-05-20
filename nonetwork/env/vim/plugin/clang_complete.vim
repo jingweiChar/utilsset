@@ -580,7 +580,6 @@ endfunction
 
 function! s:ShouldComplete()
   if (getline('.') =~ '#\s*\(include\|import\)')
-    echo "include or import, ignoring completion..."
     return 0
   else
     if col('.') == 1
