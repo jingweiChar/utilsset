@@ -7,4 +7,11 @@ pip3 install -U --user keras_applications --no-deps
 pip3 install -U --user keras_preprocessing --no-deps
 
 ./configure
+
+export BAZEL_JAVAC_OPTS="-J-Xms2g -J-Xmx3g"
 bazel build //tensorflow/tools/pip_package:build_pip_package
+
+# tensorflow lite static library
+sudo apt-get install crossbuild-essential-arm64
+./tensorflow/lite/tools/make/download_dependencies.sh
+./tensorflow/lite/tools/make/build_aarch64_lib.sh
