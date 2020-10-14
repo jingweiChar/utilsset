@@ -119,6 +119,7 @@ if has("cscope")
     set cst
     " set csverb  " output verbose message and wait enter key
     set cspc=10
+    set nocscopeverbose
     if filereadable("cscope.out")    "add any database in current dir
         cs add cscope.out . -C
     else    "else search cscope.out elsewhere

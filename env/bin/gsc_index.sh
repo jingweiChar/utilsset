@@ -5,6 +5,7 @@ file_list=sc_files.list
 workdir="$(/bin/pwd)/"
 droid_dir=(bionic device external frameworks hardware libcore system)
 clang_complete='.clang_complete'
+file_suffix=(.h .hh .hp .c .cxx .cpp .java)
 
 function usage()
 {
@@ -20,18 +21,27 @@ EOF
 function cleanup
 {
     echo "remove cscope index and ctags files..."
-    rm cscope.in.out > /dev/null 2>&1
-    rm cscope.out > /dev/null 2>&1
-    rm cscope.po.out > /dev/null 2>&1
+    rm cscope.* > /dev/null 2>&1
     rm tags > /dev/null 2>&1
     rm ${clang_complete} > /dev/null 2>&1
+}
+
+function cscope_os_things()
+{
+  if [ -f /etc/redhat-release ]; then
+    centos=`cat /etc/redhat-release | grep -ic centos`
+    if [ ${centos} -gt 0 ]; then
+      echo "centos"
+    fi
+  fi
 }
 
 function generate_index
 {
     echo "generate source code index..."
-    find ${searchdir[@]} -type f -iname "*.[h|c]*" -o -iname "*.java" > ${file_list}
-    find ${searchdir[@]} -type f -iname "*.h*" > ${clang_complete}
+
+    find ${searchdir[@]} -type f -iname "*.java" -o -iname "*.h" -o -iname "*.h[h|p]" -o -iname "*.c" -o -iname "*.c[x|p]?" > ${file_list}
+    find ${searchdir[@]} -type f -iname "*.h" -o -iname "*.h[h|p]" > ${clang_complete}
 
     sed -i 's/^/-I"/;s/$/"/' ${clang_complete}
 
